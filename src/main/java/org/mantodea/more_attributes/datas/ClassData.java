@@ -66,7 +66,7 @@ public class ClassData extends ConditionalContent {
             JsonArray itemsArray = new JsonArray();
             for (var item : src.startItems) {
                 JsonObject json = new JsonObject();
-                json.addProperty("item", item.getItem().toString());
+                json.addProperty("item", ForgeRegistries.ITEMS.getKey(item.getItem()).toString());
                 json.addProperty("count", item.getCount());
 
                 if (item.hasTag()) {

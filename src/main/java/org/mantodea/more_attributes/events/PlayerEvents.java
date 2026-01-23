@@ -4,38 +4,36 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerListener;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.mantodea.more_attributes.MoreAttributes;
 import org.mantodea.more_attributes.capability.PlayerClassCapabilityProvider;
 import org.mantodea.more_attributes.messages.AttributesChannel;
 import org.mantodea.more_attributes.messages.SyncClassToClientMessage;
 import org.mantodea.more_attributes.messages.SyncDataToClientMessage;
-import org.mantodea.more_attributes.utils.AttributeUtils;
+import org.mantodea.more_attributes.IMAPlayer;
 import org.mantodea.more_attributes.utils.ModifierUtils;
 import top.theillusivec4.curios.api.event.CurioChangeEvent;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 @Mod.EventBusSubscriber(modid = MoreAttributes.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerEvents {
-
     @SubscribeEvent
     public static void onEquipChange(LivingEquipmentChangeEvent event) {
-        if (event.getEntity() instanceof Player player) {
-            ModifierUtils.DetailModifiers.Equip.rebuildModifiers(player);
-        }
+        updateEquipLoad(event.getEntity());
     }
 
     @SubscribeEvent
     public static void onCurioChange(CurioChangeEvent event) {
-        if (event.getEntity() instanceof Player player) {
-            ModifierUtils.DetailModifiers.Equip.rebuildModifiers(player);
-        }
+        updateEquipLoad(event.getEntity());
     }
 
     @SubscribeEvent
@@ -92,7 +90,30 @@ public class PlayerEvents {
                         AttributesChannel.sendToClient(new SyncClassToClientMessage(data), serverPlayer);
                     }
                 });
+                serverPlayer.setHealth(serverPlayer.getMaxHealth());
+                serverPlayer.inventoryMenu.addSlotListener(((IMAPlayer)serverPlayer).ma$getInventoryListener());
             }
         });
+    }
+
+    public static void updateEquipLoad(Entity player) {
+        if (player instanceof ServerPlayer serverPlayer)
+            ModifierUtils.DetailModifiers.EquipLoad.rebuildModifier(serverPlayer);
+    }
+
+    @ParametersAreNonnullByDefault
+    public static class MoreAttributesInventoryListener implements ContainerListener {
+        public final Player player;
+
+        public MoreAttributesInventoryListener(Player p) {
+            this.player = p;
+        }
+
+        public void slotChanged(AbstractContainerMenu pContainerToSend, int pSlotInd, ItemStack pStack) {
+            updateEquipLoad(player);
+        }
+
+        public void dataChanged(AbstractContainerMenu pContainerMenu, int pDataSlotIndex, int pValue) {
+        }
     }
 }

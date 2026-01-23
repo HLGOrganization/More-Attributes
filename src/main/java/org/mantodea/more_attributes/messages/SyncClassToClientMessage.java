@@ -2,15 +2,12 @@ package org.mantodea.more_attributes.messages;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkEvent;
 import org.mantodea.more_attributes.datas.ClassData;
-import org.mantodea.more_attributes.datas.ClassLoader;
 import org.mantodea.more_attributes.utils.ClassUtils;
-import org.mantodea.more_attributes.utils.ModifierUtils;
 
 import java.util.function.Supplier;
 

@@ -9,7 +9,6 @@ import org.mantodea.more_attributes.datas.ClassData;
 import org.mantodea.more_attributes.messages.AttributesChannel;
 import org.mantodea.more_attributes.messages.SyncClassToClientMessage;
 import org.mantodea.more_attributes.utils.ClassUtils;
-import org.mantodea.more_attributes.utils.ModifierUtils;
 
 public class ResetClassCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -21,11 +20,8 @@ public class ResetClassCommand {
                     Commands.argument("player", EntityArgument.player())
                     .executes(context -> {
                         ServerPlayer player = EntityArgument.getPlayer(context, "player");
-
                         ClassUtils.setPlayerClass(player, new ClassData());
-
                         AttributesChannel.sendToClient(new SyncClassToClientMessage(new ClassData()), player);
-
                         return 0;
                     })
                 )

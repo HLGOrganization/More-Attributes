@@ -3,13 +3,13 @@ package org.mantodea.more_attributes.utils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.mantodea.more_attributes.MoreAttributes;
 import org.mantodea.more_attributes.attributes.DetailAttributes;
@@ -40,28 +40,26 @@ public class ModifierUtils {
 
             public static void initialize() {
                 for (var attr : AttributeUtils.getAllDetailAttributes().keySet()) {
-                    AdditionModifiers.put(attr, UUID.randomUUID());
-
-                    BaseMultiplyModifiers.put(attr, UUID.randomUUID());
-
-                    TotalMultiplyModifiers.put(attr, UUID.randomUUID());
+                    if (!AdditionModifiers.containsKey(attr)) {
+                        AdditionModifiers.put(attr, UUID.randomUUID());
+                        BaseMultiplyModifiers.put(attr, UUID.randomUUID());
+                        TotalMultiplyModifiers.put(attr, UUID.randomUUID());
+                    }
 
                     AdditionValues.put(attr, 0f);
-
                     BaseMultiplyValues.put(attr, 0f);
-
                     TotalMultiplyValues.put(attr, 0f);
                 }
             }
 
             public static void rebuildModifiers(Player player) {
-                if (FMLEnvironment.dist.isClient())
+                if (!(player instanceof ServerPlayer))
                     return;
 
                 if(modifierAdded)
                     removeModifiers(player);
 
-                resetValues();
+                initialize();
 
                 if(ModUtils.checkModLoaded("curios")) {
                     var optional = CuriosApi.getCuriosInventory(player).resolve();
@@ -150,9 +148,9 @@ public class ModifierUtils {
 
             private static float getValue(String attributeName, AttributeModifier.Operation operation) {
                 return switch (operation) {
-                    case ADDITION -> AdditionValues.getOrDefault(attributeName, 0f);
-                    case MULTIPLY_BASE -> BaseMultiplyValues.getOrDefault(attributeName, 1f);
-                    case MULTIPLY_TOTAL -> TotalMultiplyValues.getOrDefault(attributeName, 1f);
+                    case ADDITION -> AdditionValues.getOrDefault(attributeName, 0.0f);
+                    case MULTIPLY_BASE -> BaseMultiplyValues.getOrDefault(attributeName, 0.0f);
+                    case MULTIPLY_TOTAL -> TotalMultiplyValues.getOrDefault(attributeName, 0.0f);
                 };
             }
 
@@ -292,31 +290,33 @@ public class ModifierUtils {
             private static boolean modifierAdded = false;
 
             public static void initialize() {
-
                 for (var attr : AttributeUtils.getAllDetailAttributes().keySet()) {
+                    if (!AdditionModifiers.containsKey(attr)) {
+                        AdditionModifiers.put(attr, UUID.randomUUID());
+                        BaseMultiplyModifiers.put(attr, UUID.randomUUID());
+                        TotalMultiplyModifiers.put(attr, UUID.randomUUID());
+                    }
 
-                    AdditionModifiers.put(attr, UUID.randomUUID());
-
-                    BaseMultiplyModifiers.put(attr, UUID.randomUUID());
-
-                    TotalMultiplyModifiers.put(attr, UUID.randomUUID());
-
-                    AdditionValues.put(attr, 0f);
-
-                    BaseMultiplyValues.put(attr, 0f);
-
-                    TotalMultiplyValues.put(attr, 0f);
+                    AdditionValues.put(attr, 0.0f);
+                    BaseMultiplyValues.put(attr, 0.0f);
+                    TotalMultiplyValues.put(attr, 0.0f);
                 }
+                AdditionModifiers.put("minecraft:generic.max_health", UUID.fromString("c9f36c4d-45f3-4823-b0c3-4a0ae78fb000"));
+                BaseMultiplyModifiers.put("minecraft:generic.max_health", UUID.fromString("c9f36c4d-45f3-4823-b0c3-4a0ae78fb001"));
+                TotalMultiplyModifiers.put("minecraft:generic.max_health", UUID.fromString("c9f36c4d-45f3-4823-b0c3-4a0ae78fb002"));
             }
 
             public static void rebuildModifiers(Player player) {
-                if (FMLEnvironment.dist.isClient())
+                if (!(player instanceof ServerPlayer))
                     return;
 
                 if(modifierAdded)
                     removeModifiers(player);
 
-                resetValues();
+                initialize();
+                removeCustomModifier(player, "minecraft:generic.max_health", AttributeModifier.Operation.ADDITION);
+                removeCustomModifier(player, "minecraft:generic.max_health", AttributeModifier.Operation.MULTIPLY_BASE);
+                removeCustomModifier(player, "minecraft:generic.max_health", AttributeModifier.Operation.MULTIPLY_TOTAL);
 
                 var cap = player.getCapability(MoreAttributes.PLAYER_CLASS).resolve().orElse(null);
 
@@ -386,9 +386,9 @@ public class ModifierUtils {
 
             private static float getValue(String attributeName, AttributeModifier.Operation operation) {
                 return switch (operation) {
-                    case ADDITION -> AdditionValues.getOrDefault(attributeName, 0f);
-                    case MULTIPLY_BASE -> BaseMultiplyValues.getOrDefault(attributeName, 1f);
-                    case MULTIPLY_TOTAL -> TotalMultiplyValues.getOrDefault(attributeName, 1f);
+                    case ADDITION -> AdditionValues.getOrDefault(attributeName, 0.0f);
+                    case MULTIPLY_BASE -> BaseMultiplyValues.getOrDefault(attributeName, 0.0f);
+                    case MULTIPLY_TOTAL -> TotalMultiplyValues.getOrDefault(attributeName, 0.0f);
                 };
             }
 
@@ -483,8 +483,10 @@ public class ModifierUtils {
 
             private static void addCustomModifier(Player player, String attribute, AttributeModifier.Operation operation, float val) {
                 AttributeModifier modifier = createModifier(attribute, operation, val);
-
-                Objects.requireNonNull(player.getAttribute(AttributeUtils.OtherModDetailAttributes.get(attribute))).addTransientModifier(modifier);
+                if (attribute.equals("minecraft:generic.max_health"))
+                    Objects.requireNonNull(player.getAttribute(AttributeUtils.OtherModDetailAttributes.get(attribute))).addPermanentModifier(modifier);
+                else
+                    Objects.requireNonNull(player.getAttribute(AttributeUtils.OtherModDetailAttributes.get(attribute))).addTransientModifier(modifier);
             }
 
             private static AttributeModifier createModifier(String attribute, AttributeModifier.Operation operation, float val) {
@@ -503,11 +505,11 @@ public class ModifierUtils {
 
             private static void resetValues() {
                 for (var attr : AttributeUtils.getAllDetailAttributes().keySet()) {
-                    AdditionValues.put(attr, 0f);
+                    AdditionValues.put(attr, 0.0f);
 
-                    BaseMultiplyValues.put(attr, 0f);
+                    BaseMultiplyValues.put(attr, 0.0f);
 
-                    TotalMultiplyValues.put(attr, 0f);
+                    TotalMultiplyValues.put(attr, 0.0f);
                 }
             }
         }
@@ -529,29 +531,26 @@ public class ModifierUtils {
 
             public static void initialize() {
                 for (var attr : AttributeUtils.getAllDetailAttributes().keySet()) {
+                    if (!AdditionModifiers.containsKey(attr)) {
+                        AdditionModifiers.put(attr, UUID.randomUUID());
+                        BaseMultiplyModifiers.put(attr, UUID.randomUUID());
+                        TotalMultiplyModifiers.put(attr, UUID.randomUUID());
+                    }
 
-                    AdditionModifiers.put(attr, UUID.randomUUID());
-
-                    BaseMultiplyModifiers.put(attr, UUID.randomUUID());
-
-                    TotalMultiplyModifiers.put(attr, UUID.randomUUID());
-
-                    AdditionValues.put(attr, 0f);
-
-                    BaseMultiplyValues.put(attr, 0f);
-
-                    TotalMultiplyValues.put(attr, 0f);
+                    AdditionValues.put(attr, 0.0f);
+                    BaseMultiplyValues.put(attr, 0.0f);
+                    TotalMultiplyValues.put(attr, 0.0f);
                 }
             }
 
             public static void rebuildModifiers(Player player) {
-                if (FMLEnvironment.dist.isClient())
+                if (!(player instanceof ServerPlayer))
                     return;
 
                 if(modifierAdded)
                     removeModifiers(player);
 
-                resetValues();
+                initialize();
 
                 ItemStack mainHand = player.getMainHandItem();
 
@@ -587,9 +586,9 @@ public class ModifierUtils {
 
             private static float getValue(String attributeName, AttributeModifier.Operation operation) {
                 return switch (operation) {
-                    case ADDITION -> AdditionValues.getOrDefault(attributeName, 0f);
-                    case MULTIPLY_BASE -> BaseMultiplyValues.getOrDefault(attributeName, 1f);
-                    case MULTIPLY_TOTAL -> TotalMultiplyValues.getOrDefault(attributeName, 1f);
+                    case ADDITION -> AdditionValues.getOrDefault(attributeName, 0.0f);
+                    case MULTIPLY_BASE -> BaseMultiplyValues.getOrDefault(attributeName, 0.0f);
+                    case MULTIPLY_TOTAL -> TotalMultiplyValues.getOrDefault(attributeName, 0.0f);
                 };
             }
 
@@ -756,16 +755,16 @@ public class ModifierUtils {
             public static boolean modifierAdded;
 
             public static void initialize() {
-                speedModifier = UUID.randomUUID();
-
-                jumpModifier = UUID.randomUUID();
+                if (speedModifier == null) {
+                    speedModifier = UUID.randomUUID();
+                    jumpModifier = UUID.randomUUID();
+                }
 
                 modifierAdded = false;
             }
 
             public static void rebuildModifier(Player player) {
-
-                if (FMLEnvironment.dist.isClient())
+                if (!(player instanceof ServerPlayer))
                     return;
 
                 AttributeInstance speed = player.getAttribute(Attributes.MOVEMENT_SPEED);
@@ -786,9 +785,9 @@ public class ModifierUtils {
 
                 double maxLoad = Objects.requireNonNull(player.getAttribute(DetailAttributes.EquipLoadMax)).getValue();
 
-                double speedMultiplier = 1f;
+                double speedMultiplier = 1.0f;
 
-                double jumpMultiplier = 1f;
+                double jumpMultiplier = 1.0f;
 
                 if (currentLoad > maxLoad) {
                     speedMultiplier = 1 - (currentLoad - maxLoad) / maxLoad / 2;
@@ -854,15 +853,16 @@ public class ModifierUtils {
             }
         }
 
+        private static boolean initialized = false;
+
         public static void initialize() {
-
+            if (initialized)
+                return;
             Equip.initialize();
-
             Level.initialize();
-
             Hands.initialize();
-
             EquipLoad.initialize();
+            initialized = true;
         }
     }
 

@@ -7,7 +7,6 @@ import org.mantodea.more_attributes.MoreAttributes;
 
 @Mod.EventBusSubscriber(modid = MoreAttributes.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CommandRegister {
-
     @SubscribeEvent
     public static void registerCommand(RegisterCommandsEvent event){
         ResetClassCommand.register(event.getDispatcher());

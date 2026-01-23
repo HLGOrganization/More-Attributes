@@ -16,7 +16,7 @@ import org.mantodea.more_attributes.datas.*;
 import org.mantodea.more_attributes.datas.ClassLoader;
 import org.mantodea.more_attributes.messages.AttributesChannel;
 import org.mantodea.more_attributes.messages.SyncDataToClientMessage;
-import org.mantodea.more_attributes.utils.AttributeUtils;
+import org.mantodea.more_attributes.IMAPlayer;
 import org.mantodea.more_attributes.utils.ModifierUtils;
 
 import java.util.Objects;
@@ -56,6 +56,8 @@ public class CommonEvents {
             AttributesChannel.sendToClient(new SyncDataToClientMessage(array), serverPlayer);
 
             ModifierUtils.DetailModifiers.Level.rebuildModifiers(player);
+
+            serverPlayer.inventoryMenu.addSlotListener(((IMAPlayer)serverPlayer).ma$getInventoryListener());
         }
     }
 

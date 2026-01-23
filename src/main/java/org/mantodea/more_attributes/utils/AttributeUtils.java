@@ -6,9 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.mantodea.more_attributes.MoreAttributes;
 import org.mantodea.more_attributes.datas.AttributeData;
@@ -23,7 +21,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class AttributeUtils {
-
     public static Attribute rangedDetail(String name, double defaultVal, double min, double max) {
         Attribute attr = new RangedAttribute(name, defaultVal, min, max);
 

@@ -24,28 +24,19 @@ import org.slf4j.Logger;
 
 @Mod(MoreAttributes.MODID)
 public class MoreAttributes {
-
     public static final String MODID = "more_attributes";
-
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static Capability<IPlayerClassCapability> PLAYER_CLASS = CapabilityManager.get(new CapabilityToken<>() {});
 
     public MoreAttributes() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MoreAttributesConfig.Common.CommonSpec);
-
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
         DetailAttributes.triggerClassLoader();
-
         AttributeUtils.register();
-
         AttributesChannel.RegisterMessages();
-
         modEventBus.addListener(AttributeUtils::registerPlayerAttribute);
-
         MinecraftForge.EVENT_BUS.addListener(this::reloadListenerEvent);
-
         MinecraftForge.EVENT_BUS.register(this);
     }
 

@@ -2,7 +2,7 @@
     "name": "crash_landed_refugees_prisoners",
     "attributes": {
         "strength": 10,
-        "health": 10,
+        "health": 100,
         "focus": 10,
         "stamina": 10,
         "endurance": 10,
@@ -15,6 +15,10 @@
         {
             "item": "minecraft:diamond",
             "count": 64
+        },
+        {
+            "item": "tfc:alabaster/polished/gray",
+            "count": 1
         },
         {
             "item": "minecraft:netherite_sword",

@@ -54,9 +54,15 @@ public class ClassUtils {
 
     public static void setPlayerClass(Player player, ClassData classData) {
         player.getCapability(MoreAttributes.PLAYER_CLASS).resolve().ifPresent(cap -> {
+            boolean first_time = cap.getClassName().isEmpty();
             cap.setClass(classData);
-            if (!(player instanceof ServerPlayer))
+            if (!(player instanceof ServerPlayer)) {
                 TryOpenSelectScreen(player);
+            } else {
+                ModifierUtils.DetailModifiers.Level.rebuildModifiers(player);
+                if (first_time)
+                    player.setHealth(player.getMaxHealth());
+            }
         });
     }
 
