@@ -7,7 +7,6 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -29,9 +28,9 @@ public class MoreAttributes {
 
     public static Capability<IPlayerClassCapability> PLAYER_CLASS = CapabilityManager.get(new CapabilityToken<>() {});
 
-    public MoreAttributes() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MoreAttributesConfig.Common.CommonSpec);
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public MoreAttributes(FMLJavaModLoadingContext context) {
+        context.registerConfig(ModConfig.Type.COMMON, MoreAttributesConfig.Common.CommonSpec);
+        IEventBus modEventBus = context.getModEventBus();
         DetailAttributes.triggerClassLoader();
         AttributeUtils.register();
         AttributesChannel.RegisterMessages();
