@@ -748,20 +748,11 @@ public class ModifierUtils {
         }
 
         public static class EquipLoad {
-            public static UUID speedModifier;
+            public static UUID speedModifier = UUID.fromString("c9f36c4d-45f3-48d3-b0c3-4a0fedafb000");
 
-            public static UUID jumpModifier;
+            public static UUID jumpModifier = UUID.fromString("c9f36c4d-45f3-48d3-b0c3-4a0fedafb001");
 
-            public static boolean modifierAdded;
-
-            public static void initialize() {
-                if (speedModifier == null) {
-                    speedModifier = UUID.randomUUID();
-                    jumpModifier = UUID.randomUUID();
-                }
-
-                modifierAdded = false;
-            }
+            public static boolean modifierAdded = false;
 
             public static void rebuildModifier(Player player) {
                 if (!(player instanceof ServerPlayer))
@@ -861,7 +852,6 @@ public class ModifierUtils {
             Equip.initialize();
             Level.initialize();
             Hands.initialize();
-            EquipLoad.initialize();
             initialized = true;
         }
     }
