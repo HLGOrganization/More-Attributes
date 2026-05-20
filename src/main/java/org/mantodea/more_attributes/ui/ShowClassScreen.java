@@ -210,9 +210,21 @@ public class ShowClassScreen extends Screen {
 
             double val = instance.getValue();
 
-            boolean percent = name.contains("equip_load") || !data.displayAsPercentage;
-
-            String str = new DecimalFormat("0.00").format(val * (percent ? 1 : 100)).replace(".", ". ") + (percent ? "" : "%");
+            String str;
+            if (name.equals("equip_load_max")) {
+                double baseVal = instance.getBaseValue();
+                double extra = val - baseVal;
+                if (extra > 0.5) {
+                    str = new DecimalFormat("0").format(baseVal) + "(+" + new DecimalFormat("0").format(extra) + ")";
+                } else if (extra < -0.5) {
+                    str = new DecimalFormat("0").format(baseVal) + "(-" + new DecimalFormat("0").format(-extra) + ")";
+                } else {
+                    str = new DecimalFormat("0").format(val);
+                }
+            } else {
+                boolean percent = !data.displayAsPercentage;
+                str = new DecimalFormat("0.00").format(val * (percent ? 1 : 100)).replace(".", ". ") + (percent ? "" : "%");
+            }
 
             int drawX = index - startIndex < attrPerPage / 2 ? attributePosX - 176 : attributePosX;
 

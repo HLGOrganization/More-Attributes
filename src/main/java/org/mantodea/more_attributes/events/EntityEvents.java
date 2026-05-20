@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
@@ -59,6 +60,22 @@ public class EntityEvents {
         }
 
         if(entity instanceof Player player) {
+            if (player.isCreative() || player.isSpectator()) return;
+
+            if (event.getSource().is(DamageTypeTags.IS_FALL)) {
+                AttributeInstance currentAttr = player.getAttribute(DetailAttributes.EquipLoadCurrent);
+                AttributeInstance maxAttr = player.getAttribute(DetailAttributes.EquipLoadMax);
+                if (currentAttr != null && maxAttr != null) {
+                    double maxLoad = maxAttr.getValue();
+                    if (maxLoad > 0) {
+                        int overPercent = (int) (currentAttr.getValue() / maxLoad * 100) - 100;
+                        if (overPercent > 0) {
+                            event.setAmount(event.getAmount() * (1.0f + overPercent / 100.0f));
+                        }
+                    }
+                }
+            }
+
             AttributeInstance damageReduction = player.getAttribute(DetailAttributes.DamageReduction);
 
             if (damageReduction != null) {

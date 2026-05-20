@@ -1,14 +1,11 @@
 {
   "key.categories.more_attributes": "更多属性",
   "key.more_attributes.open_ui": "打开UI界面",
-
   "more_attributes.ui.select": "选择",
   "more_attributes.ui.detail": "详细",
-
   "more_attributes.ui.base_value": "基础值: %s",
   "more_attributes.ui.base_value_tip": "比基础值低将会降低你的属性",
   "more_attributes.ui.per_level": "每级: ",
-
   "more_attributes.attribute.strength": "力量",
   "more_attributes.attribute.health": "生命",
   "more_attributes.attribute.focus": "集中",
@@ -18,7 +15,6 @@
   "more_attributes.attribute.agility": "敏捷",
   "more_attributes.attribute.skill": "技巧",
   "more_attributes.attribute.luck": "幸运",
-
   "more_attributes.detail.more_attributes.equip_load_max.total": "总负重上限倍率 %s",
   "more_attributes.detail.more_attributes.equip_load_max.base": "基础负重上限倍率 %s",
   "more_attributes.detail.more_attributes.equip_load_max.addition": "基础负重上限 %s",
@@ -59,7 +55,6 @@
   "more_attributes.detail.more_attributes.damage_reduction.base": "基础免伤率倍率 %s",
   "more_attributes.detail.more_attributes.damage_reduction.addition": "基础免伤率 %s",
   "more_attributes.detail.more_attributes.damage_reduction.display": "免伤率 %s",
-
   "more_attributes.detail.minecraft.generic.movement_speed.total": "总移动速度倍率 %s",
   "more_attributes.detail.minecraft.generic.movement_speed.base": "基础移动速度倍率 %s",
   "more_attributes.detail.minecraft.generic.movement_speed.addition": "基础移动速度 %s",
@@ -80,7 +75,6 @@
   "more_attributes.detail.minecraft.generic.luck.base": "基础幸运值倍率 %s",
   "more_attributes.detail.minecraft.generic.luck.addition": "基础幸运值 %s",
   "more_attributes.detail.minecraft.generic.luck.display": "幸运值 %s",
-
   "more_attributes.detail.irons_spellbooks.max_mana.total": "总最大魔力值倍率 %s",
   "more_attributes.detail.irons_spellbooks.max_mana.base": "基础最大魔力值倍率 %s",
   "more_attributes.detail.irons_spellbooks.max_mana.addition": "基础最大魔力值 %s",
@@ -97,19 +91,16 @@
   "more_attributes.detail.irons_spellbooks.cooldown_reduction.base": "基础冷却时间缩减倍率 %s",
   "more_attributes.detail.irons_spellbooks.cooldown_reduction.addition": "基础冷却时间缩减 %s",
   "more_attributes.detail.irons_spellbooks.cooldown_reduction.display": "冷却时间缩减 %s",
-
   "more_attributes.detail.parcool.max_stamina.total": "总最大体力值倍率 %s",
   "more_attributes.detail.parcool.max_stamina.base": "基础最大体力值倍率 %s",
   "more_attributes.detail.parcool.max_stamina.addition": "基础最大体力值 %s",
   "more_attributes.detail.parcool.max_stamina.display": "最大体力值 %s",
-
   "more_attributes.slot.vanilla.mainhand": "在主手栏位时 :",
   "more_attributes.slot.vanilla.offhand": "在副手栏位时 :",
   "more_attributes.slot.vanilla.feet": "在靴子栏位时 :",
   "more_attributes.slot.vanilla.legs": "在护腿栏位时 :",
   "more_attributes.slot.vanilla.chest": "在胸甲栏位时 :",
   "more_attributes.slot.vanilla.head": "在头盔栏位时 :",
-
   "more_attributes.slot.curios.head": "在首饰饰品槽时 :",
   "more_attributes.slot.curios.hands": "在手饰饰品槽时 :",
   "more_attributes.slot.curios.charm": "在护符饰品槽时 :",
@@ -120,7 +111,6 @@
   "more_attributes.slot.curios.necklace": "在项链饰品槽时 :",
   "more_attributes.slot.curios.body": "在胸饰饰品槽时 :",
   "more_attributes.slot.curios.curio": "在饰品饰品槽时 :",
-
   "more_attributes.class.aborigines_explorers": "探险家",
   "more_attributes.class.description.aborigines_explorers": "极度喜欢探险, 有机会获得更多的资源",
   "more_attributes.class.aborigines_hunters": "猎人",
@@ -140,5 +130,13 @@
   "more_attributes.class.prison_wang": "牢王",
   "more_attributes.class.description.prison_wang": "牢王,饿的时候增加的耐性更多1",
   "more_attributes.class.worthless_people": "无用之人",
-  "more_attributes.class.description.worthless_people": "什么都不会, 但可以快速获得经验"
+  "more_attributes.class.description.worthless_people": "什么都不会, 但可以快速获得经验",
+  "more_attributes.ui.load_status.none": "无负担",
+  "more_attributes.ui.load_status.light": "轻装",
+  "more_attributes.ui.load_status.full": "满负",
+  "more_attributes.ui.load_status.overweight": "过重",
+  "more_attributes.ui.load_status.heavy": "超重",
+  "more_attributes.ui.load_status.extreme": "极重",
+  "more_attributes.ui.load_status.immobile": "寸步难行",
+  "more_attributes.ui.load_status.crushed": "寸步难行"
 }

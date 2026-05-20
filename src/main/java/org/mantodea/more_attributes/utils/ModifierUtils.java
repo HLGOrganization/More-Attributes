@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -752,6 +753,10 @@ public class ModifierUtils {
 
             public static UUID jumpModifier = UUID.fromString("c9f36c4d-45f3-48d3-b0c3-4a0fedafb001");
 
+            public static UUID strengthLoadModifier = UUID.fromString("c9f36c4d-45f3-48d3-b0c3-4a0fedafb002");
+
+            public static UUID weaknessLoadModifier = UUID.fromString("c9f36c4d-45f3-48d3-b0c3-4a0fedafb003");
+
             public static boolean modifierAdded = false;
 
             public static void rebuildModifier(Player player) {
@@ -770,11 +775,43 @@ public class ModifierUtils {
                     jump.removeModifier(jumpModifier);
                 }
 
+                if (player.isCreative() || player.isSpectator()) {
+                    var maxLoadAttr = player.getAttribute(DetailAttributes.EquipLoadMax);
+                    if (maxLoadAttr != null) {
+                        maxLoadAttr.removeModifier(strengthLoadModifier);
+                        maxLoadAttr.removeModifier(weaknessLoadModifier);
+                    }
+                    var currentLoadAttr = player.getAttribute(DetailAttributes.EquipLoadCurrent);
+                    if (currentLoadAttr != null) {
+                        currentLoadAttr.setBaseValue(0);
+                    }
+                    modifierAdded = false;
+                    return;
+                }
+
                 calculateLoad(player);
 
                 double currentLoad = Objects.requireNonNull(player.getAttribute(DetailAttributes.EquipLoadCurrent)).getValue();
 
-                double maxLoad = Objects.requireNonNull(player.getAttribute(DetailAttributes.EquipLoadMax)).getValue();
+                var maxLoadAttr = player.getAttribute(DetailAttributes.EquipLoadMax);
+
+                // 力量/虚弱影响负重上限
+                maxLoadAttr.removeModifier(strengthLoadModifier);
+                maxLoadAttr.removeModifier(weaknessLoadModifier);
+
+                var strength = player.getEffect(MobEffects.DAMAGE_BOOST);
+                if (strength != null) {
+                    maxLoadAttr.addTransientModifier(new AttributeModifier(strengthLoadModifier, "Strength load bonus", (strength.getAmplifier() + 1) * 250, AttributeModifier.Operation.ADDITION));
+                }
+
+                var weakness = player.getEffect(MobEffects.WEAKNESS);
+                if (weakness != null) {
+                    maxLoadAttr.addTransientModifier(new AttributeModifier(weaknessLoadModifier, "Weakness load penalty", -(weakness.getAmplifier() + 1) * 150, AttributeModifier.Operation.ADDITION));
+                }
+
+                double maxLoad = maxLoadAttr.getValue();
+
+                if (maxLoad < 0) maxLoad = 0;
 
                 double speedMultiplier = 1.0f;
 
@@ -838,9 +875,29 @@ public class ModifierUtils {
                             }
                         }
 
+                        load += getPassengerLoad(player, load);
+
                         currentLoad.setBaseValue(load);
                     }
                 }
+            }
+
+            private static int getPassengerLoad(Player player, int baseLoad) {
+                var passengers = player.getPassengers();
+                if (passengers.isEmpty())
+                    return 0;
+
+                int load = 0;
+
+                for (var passenger : passengers) {
+                    if (passenger instanceof Player) {
+                        load += 1024 + baseLoad;
+                    } else {
+                        load += 1024;
+                    }
+                }
+
+                return load;
             }
         }
 

@@ -64,6 +64,8 @@ public class CommonEvents {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onEntityJump(LivingEvent.LivingJumpEvent event) {
         if (event.getEntity() instanceof Player player) {
+            if (player.isCreative() || player.isSpectator()) return;
+
             double currentLoad = Objects.requireNonNull(player.getAttribute(DetailAttributes.EquipLoadCurrent)).getValue();
 
             double maxLoad = Objects.requireNonNull(player.getAttribute(DetailAttributes.EquipLoadMax)).getValue();

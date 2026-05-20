@@ -1,14 +1,11 @@
 {
   "key.categories.more_attributes": "More Attributes",
   "key.more_attributes.open_ui": "Open UI",
-
   "more_attributes.ui.select": "Select",
   "more_attributes.ui.detail": "Detail",
-
   "more_attributes.ui.base_value": "Base Value: %s",
   "more_attributes.ui.base_value_tip": "Lower than this will decrease your attributes",
   "more_attributes.ui.per_level": "Per Level: ",
-
   "more_attributes.attribute.strength": "Strength",
   "more_attributes.attribute.health": "Health",
   "more_attributes.attribute.focus": "Focus",
@@ -18,7 +15,6 @@
   "more_attributes.attribute.agility": "Agility",
   "more_attributes.attribute.skill": "Skill",
   "more_attributes.attribute.luck": "Luck",
-
   "more_attributes.detail.more_attributes.equip_load_max.total": "Total Equip Load Max Multiplier %s",
   "more_attributes.detail.more_attributes.equip_load_max.base": "Base Equip Load Max Multiplier %s",
   "more_attributes.detail.more_attributes.equip_load_max.addition": "Base Equip Load Max %s",
@@ -59,7 +55,6 @@
   "more_attributes.detail.more_attributes.damage_reduction.base": "Base Damage Reduction Multiplier %s",
   "more_attributes.detail.more_attributes.damage_reduction.addition": "Base Damage Reduction %s",
   "more_attributes.detail.more_attributes.damage_reduction.display": "Damage Reduction %s",
-
   "more_attributes.detail.minecraft.generic.movement_speed.total": "Total Movement Speed Multiplier %s",
   "more_attributes.detail.minecraft.generic.movement_speed.base": "Base Movement Speed Multiplier %s",
   "more_attributes.detail.minecraft.generic.movement_speed.addition": "Base Movement Speed %s",
@@ -80,7 +75,6 @@
   "more_attributes.detail.minecraft.generic.luck.base": "Base Luck Multiplier %s",
   "more_attributes.detail.minecraft.generic.luck.addition": "Base Luck %s",
   "more_attributes.detail.minecraft.generic.luck.display": "Luck %s",
-
   "more_attributes.detail.irons_spellbooks.max_mana.total": "Total Max Mana Multiplier %s",
   "more_attributes.detail.irons_spellbooks.max_mana.base": "Base Max Mana Multiplier %s",
   "more_attributes.detail.irons_spellbooks.max_mana.addition": "Base Max Mana %s",
@@ -97,21 +91,17 @@
   "more_attributes.detail.irons_spellbooks.cooldown_reduction.base": "Base Cooldown Reduction Multiplier %s",
   "more_attributes.detail.irons_spellbooks.cooldown_reduction.addition": "Base Cooldown Reduction %s",
   "more_attributes.detail.irons_spellbooks.cooldown_reduction.display": "Cooldown Reduction %s",
-
   "more_attributes.detail.parcool.max_stamina.total": "Total Max Stamina Multiplier %s",
   "more_attributes.detail.parcool.max_stamina.base": "Base Max Stamina Multiplier %s",
   "more_attributes.detail.parcool.max_stamina.addition": "Base Max Stamina %s",
   "more_attributes.detail.parcool.max_stamina.display": "Max Stamina %s",
-
   "more_attributes.class.test": "Test",
-
   "more_attributes.slot.vanilla.mainhand": "On Main Hand:",
   "more_attributes.slot.vanilla.offhand": "On Off Hand:",
   "more_attributes.slot.vanilla.feet": "On Feet:",
   "more_attributes.slot.vanilla.legs": "On Legs:",
   "more_attributes.slot.vanilla.chest": "On Chest:",
   "more_attributes.slot.vanilla.head": "On Head:",
-
   "more_attributes.slot.curios.head": "On Curios Head:",
   "more_attributes.slot.curios.hands": "On Curios Hands:",
   "more_attributes.slot.curios.charm": "On Curios Charm:",
@@ -121,5 +111,13 @@
   "more_attributes.slot.curios.bracelet": "On Curios Bracelet:",
   "more_attributes.slot.curios.necklace": "On Curios Necklace:",
   "more_attributes.slot.curios.body": "On Curios Body:",
-  "more_attributes.slot.curios.curio": "On Curios Curio:"
+  "more_attributes.slot.curios.curio": "On Curios Curio:",
+  "more_attributes.ui.load_status.none": "No Burden",
+  "more_attributes.ui.load_status.light": "Light Load",
+  "more_attributes.ui.load_status.full": "Full Load",
+  "more_attributes.ui.load_status.overweight": "Overweight",
+  "more_attributes.ui.load_status.heavy": "Super Heavy",
+  "more_attributes.ui.load_status.extreme": "Extreme Load",
+  "more_attributes.ui.load_status.immobile": "Immobile",
+  "more_attributes.ui.load_status.crushed": "Immobile"
 }
