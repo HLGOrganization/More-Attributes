@@ -94,7 +94,7 @@ public class ClientEvents {
             // 中间位置约 leftPos+89
             int iconWidth = 14;
             int iconHeight = 9;
-            int iconX = leftPos + 79;
+            int iconX = leftPos + 78;
             int iconY = topPos + 10;
 
             // 渲染底板 weight_0

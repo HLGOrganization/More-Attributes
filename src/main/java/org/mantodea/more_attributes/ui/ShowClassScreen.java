@@ -212,8 +212,12 @@ public class ShowClassScreen extends Screen {
 
             String str;
             if (name.equals("equip_load_max")) {
-                double baseVal = instance.getBaseValue();
-                double extra = val - baseVal;
+                double extra = 0;
+                var strengthMod = instance.getModifier(ModifierUtils.DetailModifiers.EquipLoad.strengthLoadModifier);
+                if (strengthMod != null) extra += strengthMod.getAmount();
+                var weaknessMod = instance.getModifier(ModifierUtils.DetailModifiers.EquipLoad.weaknessLoadModifier);
+                if (weaknessMod != null) extra += weaknessMod.getAmount();
+                double baseVal = val - extra;
                 if (extra > 0.5) {
                     str = new DecimalFormat("0").format(baseVal) + "(+" + new DecimalFormat("0").format(extra) + ")";
                 } else if (extra < -0.5) {
