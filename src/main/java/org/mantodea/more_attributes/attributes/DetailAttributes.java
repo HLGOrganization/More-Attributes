@@ -4,9 +4,16 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 
 import static org.mantodea.more_attributes.utils.AttributeUtils.rangedDetail;
 
+/**
+ * 本模组属性定义。
+ * <p>
+ * 命名约定（中文翻译）：
+ * - endurance = 体力（数据驱动，见 data/more_attributes/attributes/endurance.json）
+ * - stamina = 耐力（数据驱动，见 data/more_attributes/attributes/stamina.json，依赖 ParCool 模组的 max_stamina）
+ */
 public class DetailAttributes {
     public static String EquipLoadMax_ID = "equip_load_max";
-    public static Attribute EquipLoadMax = rangedDetail(EquipLoadMax_ID, 120, 0, Double.MAX_VALUE).setSyncable(true);
+    public static Attribute EquipLoadMax = rangedDetail(EquipLoadMax_ID, 1300, 0, Double.MAX_VALUE).setSyncable(true);
     public static String EquipLoadCurrent_ID = "equip_load_current";
     public static Attribute EquipLoadCurrent = rangedDetail(EquipLoadCurrent_ID, 0, 0, Double.MAX_VALUE).setSyncable(true);
     public static String RangedDamage_ID = "ranged_damage";
