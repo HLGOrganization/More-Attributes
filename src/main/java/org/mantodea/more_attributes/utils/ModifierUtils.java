@@ -780,6 +780,7 @@ public class ModifierUtils {
                     if (maxLoadAttr != null) {
                         maxLoadAttr.removeModifier(strengthLoadModifier);
                         maxLoadAttr.removeModifier(weaknessLoadModifier);
+                        maxLoadAttr.setBaseValue(LevelUtils.getLevel(player, "endurance") * 100.0 + 300);
                     }
                     var currentLoadAttr = player.getAttribute(DetailAttributes.EquipLoadCurrent);
                     if (currentLoadAttr != null) {
@@ -794,6 +795,9 @@ public class ModifierUtils {
                 double currentLoad = Objects.requireNonNull(player.getAttribute(DetailAttributes.EquipLoadCurrent)).getValue();
 
                 var maxLoadAttr = player.getAttribute(DetailAttributes.EquipLoadMax);
+
+                // 体力等级决定负重上限：体力等级×100+300
+                maxLoadAttr.setBaseValue(LevelUtils.getLevel(player, "endurance") * 100.0 + 300);
 
                 // 力量/虚弱影响负重上限
                 maxLoadAttr.removeModifier(strengthLoadModifier);

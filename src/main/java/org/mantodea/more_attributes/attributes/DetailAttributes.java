@@ -13,7 +13,7 @@ import static org.mantodea.more_attributes.utils.AttributeUtils.rangedDetail;
  */
 public class DetailAttributes {
     public static String EquipLoadMax_ID = "equip_load_max";
-    public static Attribute EquipLoadMax = rangedDetail(EquipLoadMax_ID, 1300, 0, Double.MAX_VALUE).setSyncable(true);
+    public static Attribute EquipLoadMax = rangedDetail(EquipLoadMax_ID, 300, 0, Double.MAX_VALUE).setSyncable(true);
     public static String EquipLoadCurrent_ID = "equip_load_current";
     public static Attribute EquipLoadCurrent = rangedDetail(EquipLoadCurrent_ID, 0, 0, Double.MAX_VALUE).setSyncable(true);
     public static String RangedDamage_ID = "ranged_damage";
